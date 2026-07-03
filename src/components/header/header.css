@@ -1,0 +1,15 @@
+.app-header {
+  background: linear-gradient(135deg, #0b1f3a, #163d63);
+  box-shadow: 0 0.75rem 2rem rgba(6, 24, 44, 0.2);
+}
+
+.app-header .navbar-brand,
+.app-header .nav-link {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.app-header .nav-link.active,
+.app-header .nav-link:hover,
+.app-header .navbar-brand:hover {
+  color: #ffffff;
+}

@@ -1,0 +1,25 @@
+:root {
+  color-scheme: light;
+  --app-bg: #eef3f9;
+  --app-text: #122033;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.96), rgba(238, 243, 249, 0.96)), var(--app-bg);
+  color: var(--app-text);
+}
+
+a {
+  text-decoration: none;
+}
+
+.eyebrow {
+  letter-spacing: 0.18em;
+  color: #5c6b7a;
+}
