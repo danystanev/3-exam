@@ -22,6 +22,14 @@ export function setUser(user) {
   window.localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
 }
 
+export function setGuestUser() {
+  setUser({ email: 'user@example.com', role: 'user' });
+}
+
+export function setAdminUser() {
+  setUser({ email: 'admin@example.com', role: 'admin' });
+}
+
 export function clearUser() {
   window.localStorage.removeItem(AUTH_STORAGE_KEY);
 }

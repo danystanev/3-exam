@@ -2,6 +2,7 @@ import { renderHeader } from './components/header/header.js';
 import { renderFooter } from './components/footer/footer.js';
 import { routes } from './routes.js';
 import { bindHeaderActions } from './components/header/header.js';
+import { clearUser } from './state/auth.js';
 
 function resolveRoute(pathname) {
   const matchedRoute = routes.find((route) => route.pattern.test(pathname));
@@ -35,6 +36,15 @@ async function renderRoute(pathname) {
   headerSlot.innerHTML = renderHeader(route.pathname);
   contentSlot.innerHTML = pageModule.renderPage(route.params);
   footerSlot.innerHTML = renderFooter();
+
+  if (typeof pageModule.bindPageActions === 'function') {
+    pageModule.bindPageActions({
+      navigateTo,
+      renderRoute,
+      pathname: route.pathname,
+      params: route.params
+    });
+  }
 }
 
 export function navigateTo(pathname, { replace = false } = {}) {
@@ -70,7 +80,8 @@ export function setupRouter() {
   });
 
   bindHeaderActions(() => {
-    renderRoute('/');
+    clearUser();
+    navigateTo('/', { replace: true });
   });
 
   renderRoute(window.location.pathname || '/');

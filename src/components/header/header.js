@@ -1,6 +1,6 @@
 import template from './header.html?raw';
 import './header.css';
-import { clearUser, getUser, isAdmin, isLoggedIn } from '../../state/auth.js';
+import { getUser, isAdmin, isLoggedIn } from '../../state/auth.js';
 
 function buildNavigation(pathname) {
   const sharedLinks = `
@@ -71,7 +71,6 @@ export function bindHeaderActions(onAuthChanged) {
     }
 
     event.preventDefault();
-    clearUser();
     onAuthChanged();
   });
 }
