@@ -6,14 +6,16 @@
           <p class="eyebrow text-uppercase fw-semibold mb-2">Login</p>
           <h1 class="h3 fw-bold mb-4">Welcome back</h1>
           <p class="text-muted mb-3">Use the demo controls to switch the navbar state.</p>
-          <form class="d-grid gap-3" id="login-form">
+          <form class="needs-validation d-grid gap-3" id="login-form" novalidate>
             <div>
               <label class="form-label" for="email">Email</label>
-              <input class="form-control" id="email" type="email" placeholder="you@example.com" />
+              <input class="form-control" id="email" name="email" type="email" placeholder="you@example.com" required />
+              <div class="invalid-feedback">Email is required and must be a valid email address.</div>
             </div>
             <div>
               <label class="form-label" for="password">Password</label>
-              <input class="form-control" id="password" type="password" placeholder="Password" />
+              <input class="form-control" id="password" name="password" type="password" placeholder="Password" minlength="6" required />
+              <div class="invalid-feedback">Password is required and must be at least 6 characters long.</div>
             </div>
             <div class="d-grid gap-2">
               <button class="btn btn-primary btn-lg" type="submit">Login as user</button>
