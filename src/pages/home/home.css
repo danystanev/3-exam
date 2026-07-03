@@ -1,5 +1,23 @@
 .page-home {
   min-height: 60vh;
-  display: grid;
-  align-items: center;
+}
+
+.home-hero {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(238, 243, 249, 0.4));
+}
+
+.featured-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.featured-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 1rem 2rem rgba(18, 32, 51, 0.12);
+}
+
+@media (min-width: 992px) {
+  .py-lg-6 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
 }
