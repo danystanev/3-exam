@@ -1,6 +1,7 @@
 import { renderHeader } from './components/header/header.js';
 import { renderFooter } from './components/footer/footer.js';
 import { routes } from './routes.js';
+import { bindHeaderActions } from './components/header/header.js';
 
 function resolveRoute(pathname) {
   const matchedRoute = routes.find((route) => route.pattern.test(pathname));
@@ -66,6 +67,10 @@ export function setupRouter() {
 
   window.addEventListener('popstate', () => {
     renderRoute(window.location.pathname);
+  });
+
+  bindHeaderActions(() => {
+    renderRoute('/');
   });
 
   renderRoute(window.location.pathname || '/');
