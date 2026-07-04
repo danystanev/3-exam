@@ -1,5 +1,6 @@
 import template from './add-recipe.html?raw';
 import './add-recipe.css';
+import { t } from '../../i18n/i18n.js';
 
 export function renderPage() {
   return template;
@@ -45,7 +46,7 @@ export function bindPageActions() {
 
     if (field.type === 'file') {
       const hasFile = field.files && field.files.length > 0;
-      field.setCustomValidity(hasFile ? '' : 'Please upload an image.');
+      field.setCustomValidity(hasFile ? '' : t('pages.addRecipe.imageInvalid'));
     }
 
     field.classList.toggle('is-invalid', !field.checkValidity());
@@ -85,7 +86,7 @@ export function bindPageActions() {
       return;
     }
 
-    showMessage('Recipe form validated successfully. Connect this form to Supabase to save the recipe.', 'success');
+    showMessage(t('pages.addRecipe.validatedSuccess'), 'success');
     form.reset();
     form.classList.remove('was-validated');
 

@@ -2,6 +2,7 @@ import { renderHeader } from './components/header/header.js';
 import { renderFooter } from './components/footer/footer.js';
 import { routes } from './routes.js';
 import { bindHeaderActions } from './components/header/header.js';
+import { applyTranslations, onLanguageChange } from './i18n/i18n.js';
 
 function resolveRoute(pathname) {
   const matchedRoute = routes.find((route) => route.pattern.test(pathname));
@@ -35,6 +36,7 @@ async function renderRoute(pathname) {
   headerSlot.innerHTML = renderHeader(route.pathname);
   contentSlot.innerHTML = pageModule.renderPage(route.params);
   footerSlot.innerHTML = renderFooter();
+  applyTranslations(shell);
 
   if (typeof pageModule.bindPageActions === 'function') {
     pageModule.bindPageActions({
@@ -80,6 +82,10 @@ export function setupRouter() {
 
   bindHeaderActions(() => {
     navigateTo('/logout', { replace: true });
+  });
+
+  onLanguageChange(() => {
+    renderRoute(window.location.pathname || '/');
   });
 
   renderRoute(window.location.pathname || '/');

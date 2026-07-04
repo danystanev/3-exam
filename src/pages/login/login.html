@@ -3,22 +3,22 @@
     <div class="col-md-8 col-lg-5">
       <div class="card shadow-sm border-0">
         <div class="card-body p-4 p-md-5">
-          <p class="eyebrow text-uppercase fw-semibold mb-2">Login</p>
-          <h1 class="h3 fw-bold mb-4">Welcome back</h1>
-          <p class="text-muted mb-3">Sign in with your Supabase account to continue.</p>
+          <p class="eyebrow text-uppercase fw-semibold mb-2" data-i18n="pages.login.eyebrow"></p>
+          <h1 class="h3 fw-bold mb-4" data-i18n="pages.login.title"></h1>
+          <p class="text-muted mb-3" data-i18n="pages.login.subtitle"></p>
           <div class="alert d-none mb-3" id="login-message" role="alert" aria-live="polite"></div>
           <form class="needs-validation d-grid gap-3" id="login-form" novalidate>
             <div>
-              <label class="form-label" for="email">Email</label>
-              <input class="form-control" id="email" name="email" type="email" placeholder="you@example.com" required />
-              <div class="invalid-feedback">Email is required and must be a valid email address.</div>
+              <label class="form-label" for="email" data-i18n="pages.login.emailLabel"></label>
+              <input class="form-control" id="email" name="email" type="email" data-i18n-placeholder="pages.login.emailPlaceholder" required />
+              <div class="invalid-feedback" data-i18n="pages.login.emailInvalid"></div>
             </div>
             <div>
-              <label class="form-label" for="password">Password</label>
-              <input class="form-control" id="password" name="password" type="password" placeholder="Password" minlength="6" required />
-              <div class="invalid-feedback">Password is required and must be at least 6 characters long.</div>
+              <label class="form-label" for="password" data-i18n="pages.login.passwordLabel"></label>
+              <input class="form-control" id="password" name="password" type="password" minlength="6" data-i18n-placeholder="pages.login.passwordPlaceholder" required />
+              <div class="invalid-feedback" data-i18n="pages.login.passwordInvalid"></div>
             </div>
-            <button class="btn btn-primary btn-lg" type="submit">Login</button>
+            <button class="btn btn-primary btn-lg" type="submit" data-i18n="pages.login.submit"></button>
           </form>
         </div>
       </div>

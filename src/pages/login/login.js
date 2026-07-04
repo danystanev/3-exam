@@ -1,6 +1,7 @@
 import template from './login.html?raw';
 import './login.css';
 import { loginWithPassword } from '../../state/auth.js';
+import { t } from '../../i18n/i18n.js';
 
 export function renderPage() {
   return template;
@@ -75,7 +76,7 @@ export function bindPageActions({ navigateTo }) {
 
         navigateTo('/', { replace: true });
       } catch (error) {
-        showMessage(error.message || 'Unable to log in. Please check your credentials and try again.');
+        showMessage(error.message || t('pages.login.loginFailed'));
       }
     });
   }

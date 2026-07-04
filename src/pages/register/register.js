@@ -1,6 +1,7 @@
 import template from './register.html?raw';
 import './register.css';
 import { registerUser } from '../../state/auth.js';
+import { t } from '../../i18n/i18n.js';
 
 export function renderPage() {
   return template;
@@ -39,7 +40,7 @@ export function bindPageActions({ navigateTo }) {
     }
 
     const passwordsMatch = passwordInput.value === confirmPasswordInput.value && confirmPasswordInput.value.length > 0;
-    confirmPasswordInput.setCustomValidity(passwordsMatch ? '' : 'Passwords do not match.');
+    confirmPasswordInput.setCustomValidity(passwordsMatch ? '' : t('pages.register.passwordsDoNotMatch'));
     confirmPasswordInput.classList.toggle('is-invalid', !confirmPasswordInput.checkValidity());
     confirmPasswordInput.classList.toggle('is-valid', confirmPasswordInput.checkValidity());
   };
@@ -94,7 +95,7 @@ export function bindPageActions({ navigateTo }) {
           return;
         }
 
-        showMessage('Registration completed. Please check your email to confirm your account before logging in.', 'success');
+        showMessage(t('pages.register.completedCheckEmail'), 'success');
         form.reset();
         form.classList.remove('was-validated');
         [fullNameInput, emailInput, passwordInput, confirmPasswordInput].forEach((input) => {
@@ -102,7 +103,7 @@ export function bindPageActions({ navigateTo }) {
           input.setCustomValidity('');
         });
       } catch (error) {
-        showMessage(error.message || 'Unable to register. Please try again.');
+        showMessage(error.message || t('pages.register.registerFailed'));
       }
     });
   }
