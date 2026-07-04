@@ -49,13 +49,15 @@ function buildNavigation(pathname) {
 }
 
 function setActiveLink(templateHtml, pathname) {
+  const user = getUser();
+
   return templateHtml
     .replace('{{homeActive}}', pathname === '/' ? 'active' : '')
     .replace('{{loginActive}}', pathname === '/login' ? 'active' : '')
     .replace('{{dashboardActive}}', pathname === '/dashboard' ? 'active' : '')
     .replace('{{tasksActive}}', pathname.startsWith('/projects/') ? 'active' : '')
     .replace('{{navigationLinks}}', buildNavigation(pathname))
-    .replace('{{userLabel}}', getUser()?.email ?? 'Guest');
+    .replace('{{userLabel}}', user?.username || user?.fullName || user?.email || 'Guest');
 }
 
 export function renderHeader(pathname) {

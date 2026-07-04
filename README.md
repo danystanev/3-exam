@@ -18,6 +18,16 @@ VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
 
 Admin navigation is controlled by the Supabase user role metadata. Set `role: admin` in the user's `app_metadata` or `user_metadata` to show the Admin Panel link.
 
+## Profiles Table
+
+Run [supabase/profiles.sql](supabase/profiles.sql) in the Supabase SQL editor to create the `profiles` table and the trigger that automatically inserts a profile row after registration.
+
+The trigger stores:
+
+- `username`
+- `avatar_url`
+- `role = 'user'`
+
 ## Commands
 
 ```bash
