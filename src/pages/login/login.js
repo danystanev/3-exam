@@ -1,6 +1,6 @@
 import template from './login.html?raw';
 import './login.css';
-import { setAdminUser, setUser } from '../../state/auth.js';
+import { loginWithPassword } from '../../state/auth.js';
 
 export function renderPage() {
   return template;
@@ -8,9 +8,28 @@ export function renderPage() {
 
 export function bindPageActions({ navigateTo }) {
   const form = document.querySelector('#login-form');
-  const adminButton = document.querySelector('[data-demo-login="admin"]');
   const emailInput = document.querySelector('#email');
   const passwordInput = document.querySelector('#password');
+  const messageBox = document.querySelector('#login-message');
+
+  const showMessage = (message, type = 'danger') => {
+    if (!messageBox) {
+      return;
+    }
+
+    messageBox.className = `alert alert-${type} mb-3`;
+    messageBox.textContent = message;
+    messageBox.classList.remove('d-none');
+  };
+
+  const hideMessage = () => {
+    if (!messageBox) {
+      return;
+    }
+
+    messageBox.className = 'alert d-none mb-3';
+    messageBox.textContent = '';
+  };
 
   const validateField = (input) => {
     if (!input) {
@@ -34,31 +53,30 @@ export function bindPageActions({ navigateTo }) {
 
   if (form) {
     form.addEventListener('input', (event) => {
+      hideMessage();
+
       if (event.target === emailInput || event.target === passwordInput) {
         validateField(event.target);
       }
     });
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
       if (!validateForm()) {
         return;
       }
 
-      setUser({ email: emailInput.value.trim(), role: 'user' });
-      navigateTo('/', { replace: true });
-    });
-  }
+      try {
+        await loginWithPassword({
+          email: emailInput.value.trim(),
+          password: passwordInput.value
+        });
 
-  if (adminButton) {
-    adminButton.addEventListener('click', () => {
-      if (!validateForm()) {
-        return;
+        navigateTo('/', { replace: true });
+      } catch (error) {
+        showMessage(error.message || 'Unable to log in. Please check your credentials and try again.');
       }
-
-      setAdminUser();
-      navigateTo('/', { replace: true });
     });
   }
 }

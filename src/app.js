@@ -1,7 +1,8 @@
 import { renderLayout } from './layout/layout.js';
 import { setupRouter } from './router.js';
+import { initAuth } from './state/auth.js';
 
-export function startApp() {
+export async function startApp() {
   const app = document.querySelector('#app');
 
   if (!app) {
@@ -9,5 +10,6 @@ export function startApp() {
   }
 
   app.innerHTML = renderLayout();
+  await initAuth();
   setupRouter();
 }

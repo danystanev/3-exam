@@ -1,12 +1,15 @@
 import template from './logout.html?raw';
 import './logout.css';
-import { clearUser } from '../../state/auth.js';
+import { logoutUser } from '../../state/auth.js';
 
 export function renderPage() {
   return template;
 }
 
-export function bindPageActions({ navigateTo }) {
-  clearUser();
-  navigateTo('/', { replace: true });
+export async function bindPageActions({ navigateTo }) {
+  try {
+    await logoutUser();
+  } finally {
+    navigateTo('/', { replace: true });
+  }
 }

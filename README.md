@@ -7,6 +7,17 @@ Modular Vite single-page app with:
 - Bootstrap styling
 - History API routing for `/`, `/login`, `/dashboard`, and `/projects/{id}/tasks`
 
+## Supabase Authentication
+
+Create a `.env` file in the project root and add:
+
+```bash
+VITE_SUPABASE_URL=your-supabase-project-url
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
+
+Admin navigation is controlled by the Supabase user role metadata. Set `role: admin` in the user's `app_metadata` or `user_metadata` to show the Admin Panel link.
+
 ## Commands
 
 ```bash
