@@ -6,6 +6,14 @@ const en = {
     languageLabel: 'Language',
     submit: 'Submit'
   },
+  auth: {
+    configurationMissing: 'Supabase is not configured. Add the required environment variables and try again.',
+    loginFailed: 'Unable to log in. Please check your credentials and try again.',
+    registerFailed: 'Unable to register. Please try again.',
+    emailAlreadyExists: 'This email address is already registered.',
+    unexpectedError: 'Something went wrong. Please try again later.',
+    logoutFailed: 'Unable to log out. Please try again.'
+  },
   nav: {
     home: 'Home',
     recipes: 'Recipes',

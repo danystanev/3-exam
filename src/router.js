@@ -3,6 +3,9 @@ import { renderFooter } from './components/footer/footer.js';
 import { routes } from './routes.js';
 import { bindHeaderActions } from './components/header/header.js';
 import { applyTranslations, onLanguageChange } from './i18n/i18n.js';
+import { getUser, isLoggedIn, isAdmin, logoutUser } from './state/auth.js';
+
+const LOGIN_REDIRECT_KEY = '3-exam-login-redirect';
 
 function resolveRoute(pathname) {
   const matchedRoute = routes.find((route) => route.pattern.test(pathname));
@@ -20,8 +23,48 @@ function resolveRoute(pathname) {
   return {
     name: matchedRoute.name,
     params: matchedRoute.params(match),
+    protected: Boolean(matchedRoute.protected),
+    adminOnly: Boolean(matchedRoute.adminOnly),
     pathname
   };
+}
+
+function redirectToLogin(pathname) {
+  window.sessionStorage.setItem(LOGIN_REDIRECT_KEY, pathname);
+  navigateTo('/login', { replace: true });
+}
+
+function getLoginRedirectPath() {
+  const redirectPath = window.sessionStorage.getItem(LOGIN_REDIRECT_KEY);
+
+  if (!redirectPath) {
+    return null;
+  }
+
+  window.sessionStorage.removeItem(LOGIN_REDIRECT_KEY);
+  return redirectPath;
+}
+
+function guardRoute(route) {
+  if (!route.protected) {
+    return route;
+  }
+
+  if (!isLoggedIn()) {
+    redirectToLogin(route.pathname);
+    return null;
+  }
+
+  if (route.adminOnly && !isAdmin()) {
+    return {
+      ...route,
+      name: 'home',
+      params: {},
+      pathname: '/'
+    };
+  }
+
+  return route;
 }
 
 async function renderRoute(pathname) {
@@ -30,7 +73,12 @@ async function renderRoute(pathname) {
   const headerSlot = shell.querySelector('[data-header-slot]');
   const contentSlot = shell.querySelector('[data-content-slot]');
   const footerSlot = shell.querySelector('[data-footer-slot]');
-  const route = resolveRoute(pathname);
+  const route = guardRoute(resolveRoute(pathname));
+
+  if (!route) {
+    return;
+  }
+
   const pageModule = await import(`./pages/${route.name}/${route.name}.js`);
 
   headerSlot.innerHTML = renderHeader(route.pathname);
@@ -89,4 +137,8 @@ export function setupRouter() {
   });
 
   renderRoute(window.location.pathname || '/');
+}
+
+export function consumeLoginRedirect() {
+  return getLoginRedirectPath();
 }

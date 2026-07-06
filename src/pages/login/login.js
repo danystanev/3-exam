@@ -1,7 +1,8 @@
 import template from './login.html?raw';
 import './login.css';
-import { loginWithPassword } from '../../state/auth.js';
+import { getAuthErrorMessage, loginWithPassword } from '../../state/auth.js';
 import { t } from '../../i18n/i18n.js';
+import { consumeLoginRedirect } from '../../router.js';
 
 export function renderPage() {
   return template;
@@ -74,9 +75,9 @@ export function bindPageActions({ navigateTo }) {
           password: passwordInput.value
         });
 
-        navigateTo('/', { replace: true });
+        navigateTo(consumeLoginRedirect() || '/', { replace: true });
       } catch (error) {
-        showMessage(error.message || t('pages.login.loginFailed'));
+        showMessage(getAuthErrorMessage(error, 'auth.loginFailed'));
       }
     });
   }

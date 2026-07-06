@@ -1,4 +1,5 @@
 import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabase.js';
+import { t } from '../i18n/i18n.js';
 
 const authListeners = new Set();
 
@@ -68,10 +69,29 @@ function requireSupabaseClient() {
   const client = getSupabaseClient();
 
   if (!client) {
-    throw new Error('Supabase is not configured. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your environment.');
+    throw new Error(t('auth.configurationMissing'));
   }
 
   return client;
+}
+
+export function getAuthErrorMessage(error, fallbackKey) {
+  const errorCode = error?.code || error?.error_code || error?.status;
+  const errorMessage = String(error?.message || '').toLowerCase();
+
+  if (errorMessage.includes('already registered') || errorMessage.includes('already exists')) {
+    return t('auth.emailAlreadyExists');
+  }
+
+  if (errorCode === 'invalid_credentials' || errorMessage.includes('invalid login credentials')) {
+    return t('auth.loginFailed');
+  }
+
+  if (errorCode === 'email_exists') {
+    return t('auth.emailAlreadyExists');
+  }
+
+  return t(fallbackKey || 'auth.unexpectedError');
 }
 
 export async function initAuth() {

@@ -22,17 +22,20 @@ export const routes = [
   {
     name: 'my-recipes',
     pattern: /^\/my-recipes\/?$/,
-    params: () => ({})
+    params: () => ({}),
+    protected: true
   },
   {
     name: 'add-recipe',
     pattern: /^\/add-recipe\/?$/,
-    params: () => ({})
+    params: () => ({}),
+    protected: true
   },
   {
     name: 'profile',
     pattern: /^\/profile\/?$/,
-    params: () => ({})
+    params: () => ({}),
+    protected: true
   },
   {
     name: 'logout',
@@ -42,16 +45,20 @@ export const routes = [
   {
     name: 'admin-panel',
     pattern: /^\/admin-panel\/?$/,
-    params: () => ({})
+    params: () => ({}),
+    protected: true,
+    adminOnly: true
   },
   {
     name: 'dashboard',
     pattern: /^\/dashboard\/?$/,
-    params: () => ({})
+    params: () => ({}),
+    protected: true
   },
   {
     name: 'project-tasks',
     pattern: /^\/projects\/([^/]+)\/tasks\/?$/,
-    params: (match) => ({ projectId: match[1] })
+    params: (match) => ({ projectId: match[1] }),
+    protected: true
   }
 ];

@@ -1,7 +1,8 @@
 import template from './register.html?raw';
 import './register.css';
-import { registerUser } from '../../state/auth.js';
+import { getAuthErrorMessage, registerUser } from '../../state/auth.js';
 import { t } from '../../i18n/i18n.js';
+import { consumeLoginRedirect } from '../../router.js';
 
 export function renderPage() {
   return template;
@@ -91,7 +92,7 @@ export function bindPageActions({ navigateTo }) {
         });
 
         if (result.session) {
-          navigateTo('/', { replace: true });
+          navigateTo(consumeLoginRedirect() || '/', { replace: true });
           return;
         }
 
@@ -103,7 +104,7 @@ export function bindPageActions({ navigateTo }) {
           input.setCustomValidity('');
         });
       } catch (error) {
-        showMessage(error.message || t('pages.register.registerFailed'));
+        showMessage(getAuthErrorMessage(error, 'auth.registerFailed'));
       }
     });
   }
