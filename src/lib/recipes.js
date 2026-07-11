@@ -172,3 +172,18 @@ export async function getRecipeById(id) {
 
   return data;
 }
+
+export async function getAllRecipes() {
+  const supabase = getClient();
+
+  const { data, error } = await supabase
+    .from('recipes')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}

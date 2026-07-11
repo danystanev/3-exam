@@ -16,6 +16,9 @@ function normalizeUser(user, profile = null) {
   const avatarUrl = profile?.avatar_url ?? user.user_metadata?.avatar_url ?? '';
   const fullName = user.user_metadata?.full_name ?? user.user_metadata?.name ?? '';
 
+console.log('PROFILE:', profile);
+console.log('ROLE:', role);
+
   return {
     id: user.id,
     email: user.email ?? '',
@@ -40,11 +43,15 @@ function setCurrentUser(user) {
 
 async function loadProfile(userId) {
   const supabase = requireSupabaseClient();
+
   const { data, error } = await supabase
     .from('profiles')
-    .select('id, username, avatar_url, role, created_at, updated_at')
+    .select('*')
     .eq('id', userId)
-    .maybeSingle();
+    .single();
+
+  console.log('Profile data:', data);
+  console.log('Profile error:', error);
 
   if (error) {
     return null;
@@ -53,7 +60,10 @@ async function loadProfile(userId) {
   return data;
 }
 
+
 async function syncCurrentUser(user) {
+console.log('Logged user id:', user?.id);
+
   if (!user) {
     setCurrentUser(null);
     return currentUser;
