@@ -1,6 +1,7 @@
 import template from './add-recipe.html?raw';
 import './add-recipe.css';
 import { t } from '../../i18n/i18n.js';
+import { createRecipe } from '../../lib/recipes.js';
 
 export function renderPage() {
   return template;
@@ -67,26 +68,40 @@ export function bindPageActions() {
     return;
   }
 
-  form.addEventListener('input', (event) => {
-    hideMessage();
+ form.addEventListener('input', (event) => {
+  hideMessage();
+  validateField(event.target);
+});
 
-    validateField(event.target);
-  });
+form.addEventListener('change', (event) => {
+  hideMessage();
+  validateField(event.target);
+});
 
-  form.addEventListener('change', (event) => {
-    hideMessage();
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
 
-    validateField(event.target);
-  });
+  hideMessage();
 
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
+  if (!validateForm()) {
+    return;
+  }
 
-    if (!validateForm()) {
-      return;
-    }
+  try {
+    const recipe = {
+      title: document.querySelector('#title').value.trim(),
+      ingredients: document.querySelector('#ingredients').value.trim(),
+      instructions: document.querySelector('#instructions').value.trim(),
+      cookingTime: Number(document.querySelector('#cookingTime').value),
+      difficulty: document.querySelector('#difficulty').value,
+      category: document.querySelector('#category').value,
+      image: document.querySelector('#image').files[0]
+    };
+
+    await createRecipe(recipe);
 
     showMessage(t('pages.addRecipe.validatedSuccess'), 'success');
+
     form.reset();
     form.classList.remove('was-validated');
 
@@ -98,18 +113,23 @@ export function bindPageActions() {
       field.classList.remove('is-valid', 'is-invalid');
       field.setCustomValidity('');
     });
+
+  } catch (error) {
+    console.error(error);
+    showMessage(error.message || 'Unable to save recipe.', 'danger');
+  }
+});
+
+form.addEventListener('reset', () => {
+  hideMessage();
+
+  fields.forEach((field) => {
+    if (!field) {
+      return;
+    }
+
+    field.classList.remove('is-valid', 'is-invalid');
+    field.setCustomValidity('');
   });
-
-  form.addEventListener('reset', () => {
-    hideMessage();
-
-    fields.forEach((field) => {
-      if (!field) {
-        return;
-      }
-
-      field.classList.remove('is-valid', 'is-invalid');
-      field.setCustomValidity('');
-    });
-  });
+});
 }
