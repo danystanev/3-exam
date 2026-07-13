@@ -1,13 +1,17 @@
 import template from './add-recipe.html?raw';
 import './add-recipe.css';
 import { t } from '../../i18n/i18n.js';
-import { createRecipe } from '../../lib/recipes.js';
+import {
+  createRecipe,
+  getRecipeById,
+  updateRecipe
+} from '../../lib/recipes.js';
 
 export function renderPage() {
   return template;
 }
 
-export function bindPageActions() {
+export async function bindPageActions({ params }) {
   const form = document.querySelector('#add-recipe-form');
   const messageBox = document.querySelector('#add-recipe-message');
 
@@ -20,6 +24,31 @@ export function bindPageActions() {
     document.querySelector('#category'),
     document.querySelector('#image')
   ];
+
+const recipeId = params?.id ?? null;
+
+if (recipeId) {
+  const recipe = await getRecipeById(recipeId);
+
+  document.querySelector('#title').value = recipe.title;
+  document.querySelector('#ingredients').value = recipe.ingredients;
+  document.querySelector('#instructions').value = recipe.instructions;
+  document.querySelector('#cookingTime').value = recipe.cooking_time;
+  document.querySelector('#difficulty').value = recipe.difficulty;
+
+  const categories = {
+    1: 'Breakfast',
+    2: 'Lunch',
+    3: 'Dinner',
+    4: 'Dessert',
+    5: 'Soup',
+    6: 'Salad',
+    7: 'Drink'
+  };
+
+  document.querySelector('#category').value =
+    categories[recipe.category_id];
+}
 
   const showMessage = (message, type = 'success') => {
     if (!messageBox) {
@@ -98,11 +127,15 @@ form.addEventListener('submit', async (event) => {
       image: document.querySelector('#image').files[0]
     };
 
-    await createRecipe(recipe);
+    if (recipeId) {
+  await updateRecipe(recipeId, recipe);
+  showMessage('Recipe updated successfully!', 'success');
+} else {
+  await createRecipe(recipe);
+  showMessage(t('pages.addRecipe.validatedSuccess'), 'success');
+}
 
-    showMessage(t('pages.addRecipe.validatedSuccess'), 'success');
-
-    form.reset();
+       form.reset();
     form.classList.remove('was-validated');
 
     fields.forEach((field) => {

@@ -1,0 +1,60 @@
+<section class="container py-5">
+
+    <h2 class="mb-4">Edit Recipe</h2>
+
+    <form id="edit-recipe-form">
+
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input id="title" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Ingredients</label>
+            <textarea id="ingredients" class="form-control" rows="4" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Instructions</label>
+            <textarea id="instructions" class="form-control" rows="6" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Cooking time</label>
+            <input
+                id="cookingTime"
+                type="number"
+                class="form-control"
+                required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Difficulty</label>
+
+            <select id="difficulty" class="form-select">
+
+                <option>Easy</option>
+                <option>Medium</option>
+                <option>Hard</option>
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Image</label>
+
+            <input
+                id="image"
+                type="file"
+                class="form-control">
+
+        </div>
+
+        <button class="btn btn-primary">
+            Save Changes
+        </button>
+
+    </form>
+
+</section>

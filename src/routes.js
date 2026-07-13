@@ -10,6 +10,21 @@ export const routes = [
     params: () => ({})
   },
   {
+    name: 'recipe-details',
+    pattern: /^\/recipes\/([^/]+)\/?$/,
+    params: (match) => ({
+      id: match[1]
+    })
+  },
+{
+  name: 'edit-recipe',
+  pattern: /^\/edit-recipe\/([^/]+)\/?$/,
+  params: (match) => ({
+    id: match[1]
+  }),
+  protected: true
+},
+  {
     name: 'login',
     pattern: /^\/login\/?$/,
     params: () => ({})
@@ -31,6 +46,22 @@ export const routes = [
     params: () => ({}),
     protected: true
   },
+{
+  name: 'add-recipe',
+  pattern: /^\/add-recipe\/([^/]+)\/?$/,
+  params: (match) => ({
+    id: match[1]
+  }),
+  protected: true
+},
+{
+  name: 'add-recipe',
+  pattern: /^\/edit-recipe\/([^/]+)\/?$/,
+  params: (match) => ({
+    id: match[1]
+  }),
+  protected: true
+},
   {
     name: 'profile',
     pattern: /^\/profile\/?$/,
@@ -58,7 +89,9 @@ export const routes = [
   {
     name: 'project-tasks',
     pattern: /^\/projects\/([^/]+)\/tasks\/?$/,
-    params: (match) => ({ projectId: match[1] }),
+    params: (match) => ({
+      projectId: match[1]
+    }),
     protected: true
   }
 ];

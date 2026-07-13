@@ -16,7 +16,6 @@ function normalizeUser(user, profile = null) {
   const avatarUrl = profile?.avatar_url ?? user.user_metadata?.avatar_url ?? '';
   const fullName = user.user_metadata?.full_name ?? user.user_metadata?.name ?? '';
 
-console.log('PROFILE:', profile);
 console.log('ROLE:', role);
 
   return {
@@ -50,9 +49,7 @@ async function loadProfile(userId) {
     .eq('id', userId)
     .single();
 
-  console.log('Profile data:', data);
-  console.log('Profile error:', error);
-
+    
   if (error) {
     return null;
   }
@@ -62,7 +59,6 @@ async function loadProfile(userId) {
 
 
 async function syncCurrentUser(user) {
-console.log('Logged user id:', user?.id);
 
   if (!user) {
     setCurrentUser(null);

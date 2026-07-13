@@ -1,24 +1,26 @@
 # 🍽️ Recipe Book
 
-A modern multi-page recipe management application built as a Capstone Project for the **Software Technologies with AI** course at **SoftUni AI**.
+A modern multi-page recipe management application built as a **Capstone Project** for the **Software Technologies with AI** course at **SoftUni AI**.
 
-The application allows users to create, manage and share recipes using a modern JavaScript frontend and Supabase backend.
+The application allows users to create, manage, and share recipes using a modern JavaScript frontend with Supabase as a Backend-as-a-Service (BaaS).
 
 ---
 
 # Features
 
-## Guest users
+## Guest Users
 
 - Browse recipes
-- View application home page
-- Register new account
+- View recipe details
+- Access the home page
+- Register a new account
 - Login
 
-## Registered users
+## Registered Users
 
 - Create recipes
 - Upload recipe images
+- View recipe details
 - View personal recipes
 - Edit own recipes
 - Delete own recipes
@@ -27,15 +29,15 @@ The application allows users to create, manage and share recipes using a modern 
 
 ## Administrator
 
-- Access Admin Panel
-- View recipes
+- Access the Admin Panel
+- View all recipes
 - Delete recipes
 
 ---
 
 # Technologies
 
-Frontend
+## Frontend
 
 - HTML5
 - CSS3
@@ -43,14 +45,14 @@ Frontend
 - Bootstrap 5
 - Vite
 
-Backend
+## Backend
 
 - Supabase Database
 - Supabase Authentication
 - Supabase Storage
 - Row Level Security (RLS)
 
-Version Control
+## Version Control
 
 - Git
 - GitHub
@@ -70,7 +72,9 @@ src
 ├── pages
 │   ├── home
 │   ├── recipes
+│   ├── recipe-details
 │   ├── add-recipe
+│   ├── edit-recipe
 │   ├── my-recipes
 │   ├── profile
 │   ├── login
@@ -100,8 +104,7 @@ The application uses Supabase with the following main tables:
 |--------|-------------|
 | profiles | User profiles and roles |
 | recipes | Recipes created by users |
-| recipe_categories | Recipe categories |
-| user_roles / roles | User role management (Admin/User) |
+| categories | Recipe categories |
 
 Relationships
 
@@ -112,10 +115,10 @@ profiles
     ▼
 recipes
 
-recipe_categories
-       │
-       │ 1 : N
-       ▼
+categories
+    │
+    │ 1 : N
+    ▼
 recipes
 ```
 
@@ -163,6 +166,8 @@ The application supports:
 
 All user interface text is localized through the built-in i18n system.
 
+Recipe content is stored in the language entered by the author.
+
 ---
 
 # Security
@@ -173,6 +178,18 @@ All user interface text is localized through the built-in i18n system.
 - Admin-only pages
 - Owner-only recipe editing
 - Owner-only recipe deletion
+
+---
+
+# Responsive Design
+
+The application is fully responsive and optimized for:
+
+- Desktop
+- Tablet
+- Mobile devices
+
+The responsive layout is implemented using Bootstrap 5.
 
 ---
 
@@ -203,7 +220,7 @@ VITE_SUPABASE_URL=YOUR_SUPABASE_URL
 VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 ```
 
-Run
+Run the development server
 
 ```bash
 npm run dev
@@ -213,11 +230,13 @@ npm run dev
 
 # Build
 
+Build production version
+
 ```bash
 npm run build
 ```
 
-Preview
+Preview production build
 
 ```bash
 npm run preview
@@ -237,7 +256,7 @@ Password:
 demo123
 ```
 
-## Admin
+## Administrator
 
 ```
 Email:
@@ -247,49 +266,37 @@ Password:
 admin123
 ```
 
-(Replace with your actual demo accounts.)
+Replace these credentials with your actual demo accounts before submitting the project.
 
 ---
 
 # Project Structure
 
-Main folders
-
-```
-components/
-```
+### components/
 
 Reusable UI components
 
-```
-pages/
-```
+### pages/
 
 Application pages
 
-```
-lib/
-```
+### lib/
 
 Supabase services
 
-```
-state/
-```
+### state/
 
-Authentication
+Authentication and user state
 
-```
-i18n/
-```
+### i18n/
 
-Localization
+Localization system
 
 ---
 
 # Project Status
 
-This project was developed as a Capstone Project for the **Software Technologies with AI** course at **SoftUni AI**.
+This project was developed as a **Capstone Project** for the **Software Technologies with AI** course at **SoftUni AI**.
 
 The application demonstrates:
 
@@ -297,15 +304,30 @@ The application demonstrates:
 - Authentication and authorization
 - Supabase database integration
 - File upload with Supabase Storage
-- CRUD operations
-- Responsive UI with Bootstrap
+- Full CRUD operations
+- Recipe management
+- Role-based access control
+- Protected routes
+- Responsive mobile-friendly UI
+- Bootstrap 5 integration
 - Internationalization (BG/EN)
-- Admin role management
+
+---
 
 # Author
 
-Danail Stanev
+**Danail Stanev**
 
-SoftUni AI Capstone Project
+Capstone Project
+
+Software Technologies with AI
+
+SoftUni AI
 
 2026
+
+---
+
+# License
+
+This project was developed for educational purposes as part of the SoftUni AI Capstone Project.

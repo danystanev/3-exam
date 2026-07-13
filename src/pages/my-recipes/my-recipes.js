@@ -50,6 +50,12 @@ export async function bindPageActions() {
 </button>
 
 <button
+  class="btn btn-success btn-sm mt-3 me-2 view-recipe"
+  data-id="${recipe.id}">
+  View
+</button>
+
+<button
   class="btn btn-primary btn-sm mt-3 me-2 edit-recipe"
   data-id="${recipe.id}">
   Edit
@@ -73,6 +79,20 @@ container.querySelectorAll('.delete-recipe').forEach((button) => {
     } catch (error) {
       alert(error.message);
     }
+  });
+});
+
+container.querySelectorAll('.view-recipe').forEach((button) => {
+  button.addEventListener('click', () => {
+    window.history.pushState({}, '', `/recipes/${button.dataset.id}`);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  });
+});
+
+container.querySelectorAll('.edit-recipe').forEach((button) => {
+  button.addEventListener('click', () => {
+    window.history.pushState({}, '', `/edit-recipe/${button.dataset.id}`);
+    window.dispatchEvent(new PopStateEvent('popstate'));
   });
 });
 

@@ -5,6 +5,8 @@ import { bindHeaderActions } from './components/header/header.js';
 import { applyTranslations, onLanguageChange } from './i18n/i18n.js';
 import { getUser, isLoggedIn, isAdmin, logoutUser } from './state/auth.js';
 
+const pages = import.meta.glob('./pages/*/*.js');
+
 const LOGIN_REDIRECT_KEY = '3-exam-login-redirect';
 
 function resolveRoute(pathname) {
@@ -79,7 +81,13 @@ async function renderRoute(pathname) {
     return;
   }
 
-  const pageModule = await import(`./pages/${route.name}/${route.name}.js`);
+  const importer = pages[`./pages/${route.name}/${route.name}.js`];
+
+if (!importer) {
+  throw new Error(`Page not found: ${route.name}`);
+}
+
+const pageModule = await importer();
 
   headerSlot.innerHTML = renderHeader(route.pathname);
   contentSlot.innerHTML = pageModule.renderPage(route.params);

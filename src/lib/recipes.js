@@ -55,8 +55,6 @@ export async function createRecipe(recipe) {
     throw new Error('User is not authenticated.');
   }
 
-console.log('Current user:', user);
-
   const imageUrl = await uploadRecipeImage(recipe.image);
 
   const recipeToInsert = {
@@ -71,16 +69,11 @@ console.log('Current user:', user);
     owner_id: user.id
   };
 
-console.log(recipeToInsert);
-
   const { data, error } = await supabase
     .from('recipes')
     .insert(recipeToInsert)
     .select()
     .single();
-
-console.log('Insert result:', data);
-console.log('Insert error:', error);
 
   if (error) {
     throw error;
